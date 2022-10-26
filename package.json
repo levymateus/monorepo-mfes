@@ -1,0 +1,19 @@
+{
+  "name": "apps",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev"
+  },
+  "devDependencies": {
+    "turbo": "^1.6.1"
+  },
+  "workspaces": [
+    "apps/*"
+   ]
+}
