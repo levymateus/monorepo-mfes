@@ -1,0 +1,25 @@
+
+pipeline {
+    agent any
+
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'rm -rf node_modules; yarn install --frozen-lockfile --cache-folder .yarn'
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh "yarn build --filter=${env.GIT_BRANCH}"
+                }
+            }
+        }
+    }
+}
