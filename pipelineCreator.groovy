@@ -8,8 +8,8 @@ multibranchPipelineJob("${Name}") {
         it / sources / 'data' / 'jenkins.branch.BranchSource' << {
             source(class: 'jenkins.plugins.git.GitSCMSource') {
                 id(uuid)
-                remote("<Git repo url>")
-                credentialsId("<Credentials ID for Git repo>")
+                remote("https://github.com/levymateus/monorepo-mfes")
+                // credentialsId("<Credentials ID for Git repo>")
                 includes('*')
                 excludes('')
                 ignoreOnPushNotifications('false')
