@@ -17,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "yarn build --filter=${env.GIT_BRANCH}"
+                    sh "yarn turbo run build --scope=@apps/app-2"
                 }
             }
         }
