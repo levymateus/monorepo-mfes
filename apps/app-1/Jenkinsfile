@@ -1,6 +1,11 @@
 
 def hasDiff(path) {
-    return sh (script: "git diff-tree -r --exit-code --no-commit-id --name-only HEAD^ HEAD -- ${path}", returnStdout: true).trim()
+    try {
+        sh "git diff-tree -r --exit-code --no-commit-id --name-only HEAD^ HEAD -- ${path}"
+        return false
+    } catch (e) {
+        return true
+    }
 }
 
 pipeline {
