@@ -1,4 +1,8 @@
 
+def hasDiff(path) {
+    return sh (script: "git diff-tree -r --exit-code --no-commit-id --name-only HEAD^ HEAD -- ${path}", returnStdout: true).trim()
+}
+
 pipeline {
     agent any
 
@@ -17,7 +21,9 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "yarn turbo run build --scope=@apps/app-3"
+                    if ( hasDiff("./apps/app-3") ) {
+                        sh "yarn turbo run build --scope=@apps/app-3"
+                    }
                 }
             }
         }

@@ -1,15 +1,7 @@
 
-def hasDiff() {
-    try {
-        // git diff will return 1 for changes (failure) which is caught in catch, or
-        // 0 meaning no changes
-        sh "git diff-tree -r --no-commit-id --name-only HEAD^ HEAD"
-        return true
-    } catch (err) {
-        return false
-    }
+def hasDiff(path) {
+    return sh (script: "git diff-tree -r --exit-code --no-commit-id --name-only HEAD^ HEAD -- ${path}", returnStdout: true).trim()
 }
-
 
 pipeline {
     agent any
@@ -29,7 +21,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    if ( hasDiff() ) {
+                    if ( hasDiff("./apps/app-1") ) {
                         sh "yarn turbo run build --scope=@apps/app-1"
                     }
                 }
