@@ -5,6 +5,10 @@ multibranchPipelineJob("${Name}") {
     displayName "${Name}"
     description "Builds ${Name}"
     configure {
+        git / 'extensions' / 'hudson.plugins.git.extensions.impl.PathRestriction' {
+            includedRegions "./apps/${Name}/.*"
+            excludedRegions "README.md\n\\.gitignore\npom.xml"
+        }
         it / sources / 'data' / 'jenkins.branch.BranchSource' << {
             source(class: 'jenkins.plugins.git.GitSCMSource') {
                 id(uuid)

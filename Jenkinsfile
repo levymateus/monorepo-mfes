@@ -9,7 +9,7 @@ pipeline {
                         echo files[i].name
                         def filePath = files[i].path
                         def pathWithoutFile = filePath.replace('/Jenkinsfile', '')
-                        def jobName = "monorepo-mfes-" + ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
+                        def jobName = ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
                         echo filePath
                         echo jobName
                         // Instance, getItemMap is insecure.
