@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    stages{
-        stage('Create jobs'){
-            steps{
+    stages {
+        stage('Create jobs') {
+            steps {
                 script {
                     def files = findFiles(glob: ' **/Jenkinsfile')
                     for (int i = 1; i < files.size(); i++) {
@@ -12,7 +12,10 @@ pipeline {
                         def jobName = "YourPrefix-" + ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
                         echo filePath
                         echo jobName
-                        if(Jenkins.instance.getItemMap()[jobName] == null) {
+                        def jobs = Jenkins.get().getItems()
+                        def job = jobs.getItem(jobName)
+                        // Instance, getItemMap is insecure.
+                        if(job == null) {
                             echo "Job ${jobName} does not exist, creating..."
                             createJob(filePath, jobName)
                         } else {
