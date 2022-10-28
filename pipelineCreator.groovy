@@ -5,11 +5,9 @@ multibranchPipelineJob("${Name}") {
     displayName "${Name}"
     description "Builds ${Name}"
     configure {
-        it / 'extensions' / 'hudson.plugins.git.extensions.impl.PathRestriction' << {
-            git {
-                includedRegions "./apps/${Name}/.*"
-                excludedRegions "README.md\n\\.gitignore"
-            }
+        it / 'extensions' / 'hudson.plugins.git.extensions.impl.PathRestriction' {
+            includedRegions "./apps/${Name}/.*"
+            excludedRegions "README.md\n\\.gitignore"
         }
         it / sources / 'data' / 'jenkins.branch.BranchSource' << {
             source(class: 'jenkins.plugins.git.GitSCMSource') {
@@ -19,6 +17,8 @@ multibranchPipelineJob("${Name}") {
                 includes('master')
                 excludes('')
                 ignoreOnPushNotifications('false')
+                includedRegions "./apps/${Name}/.*"
+                excludedRegions "README.md\n\\.gitignore"
                 traits {
                     'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
                 }
