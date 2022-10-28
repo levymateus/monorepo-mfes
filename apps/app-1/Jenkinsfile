@@ -17,7 +17,7 @@ pipeline {
         stage('Build') {
             when {
                 anyOf {
-                    changeset "src/*"
+                    changeset "src/App.tsx"
                 }
             }
             steps {
