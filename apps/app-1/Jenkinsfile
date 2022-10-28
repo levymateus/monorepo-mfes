@@ -27,11 +27,6 @@ pipeline {
             }
         }
         stage('Build') {
-            when {
-                anyOf {
-                    changeset "src/App.tsx"
-                }
-            }
             steps {
                 script {
                     if ( hasDiff() ) {
