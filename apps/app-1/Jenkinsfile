@@ -15,6 +15,12 @@ pipeline {
             }
         }
         stage('Build') {
+            when {
+                anyOf {
+                    changeset "src/*"
+                    changeset: "./package.json"
+                }
+            }
             steps {
                 script {
                     sh "yarn turbo run build --scope=@apps/app-1"
