@@ -9,7 +9,7 @@ pipeline {
                         echo files[i].name
                         def filePath = files[i].path
                         def pathWithoutFile = filePath.replace('/Jenkinsfile', '')
-                        def jobName = "YourPrefix-" + ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
+                        def jobName = "monorepo-mfes-" + ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
                         echo filePath
                         echo jobName
                         def jobs = Jenkins.get().getItems()

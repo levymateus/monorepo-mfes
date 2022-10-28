@@ -10,7 +10,7 @@ multibranchPipelineJob("${Name}") {
                 id(uuid)
                 remote("https://github.com/levymateus/monorepo-mfes")
                 // credentialsId("<Credentials ID for Git repo>")
-                includes('*')
+                includes('master')
                 excludes('')
                 ignoreOnPushNotifications('false')
                 traits {
