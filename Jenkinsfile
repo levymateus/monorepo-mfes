@@ -12,10 +12,8 @@ pipeline {
                         def jobName = "monorepo-mfes-" + ( pathWithoutFile =~ /([^\/]+)\/?$/)[0][0]
                         echo filePath
                         echo jobName
-                        def jobs = Jenkins.get().getItems()
-                        def job = jobs.getItem(jobName)
                         // Instance, getItemMap is insecure.
-                        if(job == null) {
+                        if(Jenkins.instance.getItemMap()[jobName] == null) {
                             echo "Job ${jobName} does not exist, creating..."
                             createJob(filePath, jobName)
                         } else {
