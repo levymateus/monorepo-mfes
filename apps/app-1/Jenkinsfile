@@ -18,7 +18,6 @@ pipeline {
             when {
                 anyOf {
                     changeset "src/*"
-                    changeset: "./package.json"
                 }
             }
             steps {
