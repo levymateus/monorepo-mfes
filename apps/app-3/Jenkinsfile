@@ -8,6 +8,8 @@ def hasDiff(path) {
     }
 }
 
+def isDiff = hasDiff("./apps/app-3")
+
 pipeline {
     agent any
 
@@ -17,6 +19,9 @@ pipeline {
 
     stages {
         stage('Install Dependencies') {
+            when {
+                expression { isDiff }
+            }
             steps {
                 script {
                     sh 'rm -rf node_modules; yarn install --frozen-lockfile --cache-folder .yarn'
@@ -24,11 +29,12 @@ pipeline {
             }
         }
         stage('Build') {
+            when {
+                expression { isDiff }
+            }
             steps {
                 script {
-                    if ( hasDiff("./apps/app-3") ) {
-                        sh "yarn turbo run build --scope=@apps/app-3"
-                    }
+                    sh "yarn turbo run build --scope=@apps/app-3"
                 }
             }
         }
