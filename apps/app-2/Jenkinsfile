@@ -8,8 +8,6 @@ def hasDiff(path) {
     }
 }
 
-def isDiff = hasDiff("./apps/app-2")
-
 pipeline {
     agent any
 
@@ -17,20 +15,24 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
 
+    environment {
+        DIFF = hasDiff("./apps/app-2")
+    }
+
     stages {
         stage('Install Dependencies') {
             when {
-                expression { isDiff }
+                expression { DIFF == true }
             }
             steps {
                 script {
-                    sh 'rm -rf node_modules; yarn install --frozen-lockfile --cache-folder .yarn'
+                    sh "rm -rf node_modules; yarn install --frozen-lockfile --cache-folder .yarn"
                 }
             }
         }
         stage('Build') {
             when {
-                expression { isDiff }
+                expression { DIFF == true }
             }
             steps {
                 script {
