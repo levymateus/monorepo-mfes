@@ -15,14 +15,10 @@ pipeline {
         timeout(time: 30, unit: 'MINUTES')
     }
 
-    environment {
-        DIFF = hasDiff("./apps/app-2")
-    }
-
     stages {
         stage('Install Dependencies') {
             when {
-                expression { DIFF == true }
+                expression { return hasDiff("./apps/app-2") }
             }
             steps {
                 script {
@@ -32,7 +28,7 @@ pipeline {
         }
         stage('Build') {
             when {
-                expression { DIFF == true }
+                expression { return hasDiff("./apps/app-2") }
             }
             steps {
                 script {
