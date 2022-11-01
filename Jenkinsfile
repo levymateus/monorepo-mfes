@@ -13,7 +13,7 @@ pipeline {
                         echo filePath
                         echo jobName
                         // Instance, getItemMap is insecure.
-                        if(Jenkins.instance.getItemMap()[jobName] == null) {
+                        if(Jenkins.get().getItemMap()[jobName] == null) {
                             echo "Job ${jobName} does not exist, creating..."
                             createJob(filePath, jobName)
                         } else {
